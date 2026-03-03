@@ -1533,3 +1533,41 @@ footer {
   }
 }
 
+
+.scroller {
+  overflow: hidden;
+  background: #000;
+  padding: 12px 0;
+  white-space: nowrap;
+}
+
+.scroll-content {
+  display: flex;
+  width: max-content;
+  animation: scroll-infinite 20s linear infinite;
+}
+
+.inner-content {
+  display: flex;
+}
+
+.inner-content span {
+  margin-right: 80px;
+  font-size: 18px;
+  color: #d4af37; /* dorado */
+  font-weight: 600;
+}
+
+.inner-content i {
+  margin-right: 8px;
+}
+
+/* ANIMACIÓN INFINITA */
+@keyframes scroll-infinite {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
