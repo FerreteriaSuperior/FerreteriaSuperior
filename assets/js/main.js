@@ -1,8 +1,10 @@
 // Basic UI interactions shared across pages
 
 document.addEventListener("DOMContentLoaded", () => {
+  initHomePreloader();
   handleMobileNav();
   populateYear();
+  initHomeBannerSlider();
   initCatalogPage();
   initProductDetailPage();
   initContactForm();
@@ -26,6 +28,42 @@ function populateYear() {
   if (yearEl) {
     yearEl.textContent = new Date().getFullYear().toString();
   }
+}
+
+// Home preloader (solo index)
+function initHomePreloader() {
+  const preloader = document.getElementById("home-preloader");
+  if (!preloader) return;
+
+  window.addEventListener("load", () => {
+    // Damos un pequeño tiempo para que se vea la animación
+    setTimeout(() => {
+      preloader.classList.add("hidden");
+    }, 800);
+  });
+}
+
+// Home banner slider (entre header y contenido)
+function initHomeBannerSlider() {
+  const slider = document.querySelector("[data-home-banner]");
+  if (!slider) return;
+
+  const track = slider.querySelector(".home-banner-track");
+  const slides = slider.querySelectorAll(".home-banner-slide");
+  if (!track || !slides.length) return;
+
+  let index = 0;
+
+  function goToSlide(nextIndex) {
+    index = nextIndex;
+    const offset = -index * 100;
+    track.style.transform = `translateX(${offset}%)`;
+  }
+
+  setInterval(() => {
+    const next = (index + 1) % slides.length;
+    goToSlide(next);
+  }, 6000);
 }
 
 // Catalog listing page (catalog.html)
@@ -177,7 +215,7 @@ function initProductDetailPage() {
 
   const product = products.find((p) => p.id === id) || products[0];
 
-  const titleEl = document.querySelector("[data-product-title]");
+  const titleEls = document.querySelectorAll("[data-product-title]");
   const categoryEl = document.querySelector("[data-product-category]");
   const priceEl = document.querySelector("[data-product-price]");
   const descEl = document.querySelector("[data-product-description]");
@@ -185,7 +223,11 @@ function initProductDetailPage() {
   const specsEl = document.querySelector("[data-product-specs]");
   const whatsappBtn = document.querySelector("[data-product-whatsapp]");
 
-  if (titleEl) titleEl.textContent = product.name;
+  if (titleEls.length) {
+    titleEls.forEach((el) => {
+      el.textContent = product.name;
+    });
+  }
   if (categoryEl) categoryEl.textContent = product.category;
   if (priceEl)
     priceEl.innerHTML = `${product.price || "Consultar"}<span>Precio de referencia, sujeto a existencia.</span>`;
