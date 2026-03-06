@@ -132,7 +132,7 @@ header {
       rgba(0, 0, 0, 0.68),
       rgba(0, 0, 0, 0.7)
     ),
-    url("https://images.pexels.com/photos/5854194/pexels-photo-5854194.jpeg?auto=compress&cs=tinysrgb&w=1600")
+    url("BG_IMG_2.jpg")
       center/cover no-repeat;
   color: var(--white);
 }
